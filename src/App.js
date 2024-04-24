@@ -1,5 +1,11 @@
+import { Footer } from "./layout/Footer";
+import { Header } from "./layout/Header";
+
 export default function App() {
   return (
-    <div></div>
+    <div>
+      <Header />
+      <Footer />
+    </div>
   );
 }
