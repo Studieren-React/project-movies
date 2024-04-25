@@ -1,11 +1,13 @@
+import './Header.css';
+
 export function Header() {
     return (
-        <nav>
+        <nav className="orange darken-4 header-nav">
             <div className="nav-wrapper">
                 <a
                     href="!#"
                     className="brand-logo"
-                >Logo</a>
+                >React Movies</a>
                 <ul
                     id="nav-mobile"
                     className="right hide-on-med-and-down"
