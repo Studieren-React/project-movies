@@ -10,11 +10,18 @@ export function Movie({
     return (
         <div id={id} className="card movie">
             <div className="card-image waves-effect waves-block waves-light">
-                <img
-                    className="activator"
-                    src={poster}
-                    alt={type}
-                />
+                {poster !== 'N/A'
+                    ? <img
+                        className="activator"
+                        src={poster}
+                        alt={type}
+                    />
+                    : <img
+                        className="activator"
+                        src={`https://placehold.co/300x350?text=${title}`}
+                        alt={type}
+                    />
+                }
             </div>
             <div className="card-content">
                 <span className="card-title activator grey-text text-darken-4">
