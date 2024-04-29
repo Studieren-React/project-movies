@@ -10,7 +10,8 @@ const API_KEY = 'c1004236';
 
 export class Main extends Component {
     state = {
-        movies: []
+        movies: [],
+        busy: false
     }
 
     /**
@@ -18,9 +19,12 @@ export class Main extends Component {
      * @param {*} search 
      * @returns 
      */
-    fetchMovies = async (search = 'spring') => {
-        const url = `${BASE_URL}?apikey=${API_KEY}&s=${search}`;
-        const response = await fetch(url);
+    fetchMovies = async (search = 'spring', type = '') => {
+        const searchQuery = search === '' ? 'spring' : search;
+        const typeQuery = type === 'all' ? '' : type;
+        const urlQuery = `${BASE_URL}?apikey=${API_KEY}&s=${searchQuery}&type=${typeQuery}`;
+
+        const response = await fetch(urlQuery);
 
         if (response.ok) {
             const movies = await response.json();
@@ -32,17 +36,17 @@ export class Main extends Component {
     }
 
     /** Update state */
-    updateState = (value) => {
-        this.fetchMovies(value).then((movies) => {
-            if (movies.length) {
-                this.setState({ movies });
-            }
+    updateState = (search, type) => {
+        this.setState({ busy: true });
+        this.fetchMovies(search, type).then((movies) => {
+            const response = movies != null ? movies : [];
+            this.setState({ movies: response, busy: false });
         });
     }
 
     /** Search movies */
-    searchMovies = (search) => {
-        this.updateState(search);
+    searchMovies = (search, type) => {
+        this.updateState(search, type);
     }
 
     componentDidMount() {
@@ -50,14 +54,12 @@ export class Main extends Component {
     }
 
     render() {
-        const { movies } = this.state;
-
         return (
             <main className="container content">
                 <Search searchFn={this.searchMovies} />
-                {movies.length
-                    ? <MovieList movies={movies} />
-                    : <Preloader />
+                {this.state.busy
+                    ? <Preloader />
+                    : <MovieList movies={this.state.movies} />
                 }
             </main>
         )
