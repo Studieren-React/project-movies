@@ -6,7 +6,7 @@ import { Preloader } from '../../components/Preloader/Preloader';
 import { Search } from '../../components/Search/Search';
 
 const BASE_URL = 'http://www.omdbapi.com/';
-const API_KEY = 'c1004236';
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export class Main extends Component {
     state = {
