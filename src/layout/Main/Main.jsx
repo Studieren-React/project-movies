@@ -15,8 +15,9 @@ export class Main extends Component {
     }
 
     /**
-     * Get list of movies
-     * @param {*} search 
+     * Получение списка фильмов
+     * @param {String} search Ключевое слово, по которому выполняется поиск
+     * @param {String} type Тип поиска - фильм или сериал
      * @returns 
      */
     fetchMovies = async (search = 'spring', type = '') => {
@@ -35,7 +36,12 @@ export class Main extends Component {
         }
     }
 
-    /** Update state */
+    /**
+     * Обновление стейта компонента
+     * @param {String} search Ключевое слово, по которому выполняется поиск
+     * @param {String} type Тип поиска - фильм или сериал
+     * @returns 
+     */
     updateState = (search, type) => {
         this.setState({ busy: true });
         this.fetchMovies(search, type).then((movies) => {
@@ -44,7 +50,12 @@ export class Main extends Component {
         });
     }
 
-    /** Search movies */
+    /**
+     * Поиск фильма по ключевому слову
+     * @param {String} search Ключевое слово, по которому выполняется поиск
+     * @param {String} type Тип поиска - фильм или сериал
+     * @returns 
+     */
     searchMovies = (search, type) => {
         this.updateState(search, type);
     }
