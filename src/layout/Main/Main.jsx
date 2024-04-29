@@ -1,7 +1,9 @@
 import { Component } from 'react';
+import './Main.css';
+
 import { MovieList } from '../../components/MovieList/MovieList';
 import { Preloader } from '../../components/Preloader/Preloader';
-import './Main.css';
+import { Search } from '../../components/Search/Search';
 
 const BASE_URL = 'http://www.omdbapi.com/';
 const API_KEY = 'c1004236';
@@ -29,12 +31,22 @@ export class Main extends Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchMovies('matrix').then((movies) => {
+    /** Update state */
+    updateState = (value) => {
+        this.fetchMovies(value).then((movies) => {
             if (movies.length) {
                 this.setState({ movies });
             }
         });
+    }
+
+    /** Search movies */
+    searchMovies = (search) => {
+        this.updateState(search);
+    }
+
+    componentDidMount() {
+        this.updateState();
     }
 
     render() {
@@ -42,6 +54,7 @@ export class Main extends Component {
 
         return (
             <main className="container content">
+                <Search searchFn={this.searchMovies} />
                 {movies.length
                     ? <MovieList movies={movies} />
                     : <Preloader />
